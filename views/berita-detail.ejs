@@ -1,0 +1,17 @@
+<%- include('partials/top',{title:'Berita'}) %>
+<% const paras=(n.body||'').split(/\n\s*\n/).filter(Boolean), extra=[n.image2,n.image3,n.image4].filter(Boolean); %>
+<main class="mx-auto max-w-7xl px-5">
+  <h2 class="max-w-3xl text-2xl font-bold leading-tight underline md:text-3xl"><%= n.title %></h2><p class="mt-2 text-sm"><%= fd(n.date) %></p>
+  <article class="mt-6 flow-root text-justify text-lg font-light leading-snug md:text-2xl">
+    <% if(paras[0]){ %><p><%= paras[0] %></p><% } %>
+    <% if(n.image){ %><img src="<%= n.image %>" alt="" class="mt-4 w-full object-cover md:float-right md:mb-4 md:ml-8 md:mt-5 md:w-[48%]"><% } %>
+    <% paras.slice(1).forEach(p=>{ %><p class="mt-4"><%= p %></p><% }) %>
+  </article>
+  <% if(extra.length){ %><div class="mt-8 grid gap-4 md:grid-cols-3"><% extra.forEach(x=>{ %><img src="<%= x %>" alt="" class="aspect-[4/3] w-full object-cover" data-reveal><% }) %></div><% } %>
+  <% if(more.length){ %>
+  <div class="mb-8 mt-24 flex items-center justify-between"><h3 class="font-head text-3xl font-semibold uppercase">Berita Lainnya</h3>
+    <div class="flex gap-3"><button data-scroll="-1" class="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white" aria-label="Sebelumnya"><i class="bi bi-chevron-left"></i></button><button data-scroll="1" class="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white" aria-label="Berikutnya"><i class="bi bi-chevron-right"></i></button></div></div>
+  <div id="more" class="flex snap-x gap-6 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none]"><% more.forEach(n=>{ %><div class="w-[85%] shrink-0 snap-start md:w-[calc((100%-3rem)/3)]"><%- include('partials/newscard',{n}) %></div><% }) %></div>
+  <% } %>
+</main>
+<%- include('partials/bottom') %>

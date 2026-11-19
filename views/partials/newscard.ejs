@@ -1,0 +1,6 @@
+<a href="/berita/<%= n.id %>" class="card flex h-full flex-col" data-reveal>
+  <% if(n.image){ %><img src="<%= n.image %>" alt="" class="h-44 w-full object-cover"><% } else { %><div class="flex h-44 items-center justify-center bg-slate-200 text-5xl text-slate-400"><i class="bi bi-image"></i></div><% } %>
+  <div class="flex flex-1 flex-col p-5"><span class="text-xs">Berita • <%= fd(n.date) %></span>
+    <h3 class="mt-1 text-lg font-semibold leading-snug"><%= n.title %></h3>
+    <p class="mt-2 line-clamp-3 text-justify text-xs font-light"><%= (n.body||'').slice(0,160) %></p>
+    <span class="mt-auto pt-4 text-right text-xs underline">Baca selengkapnya</span></div></a>

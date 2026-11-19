@@ -1,0 +1,59 @@
+<%
+const about=[['Profil & Sejarah','/about/profil'],['Struktur Organisasi','/about/struktur'],['Filosofi Logo','/about/filosofi']];
+const links=[['Home','/'],['Proker','/proker'],['Berita','/berita'],['Galery','/galery'],['Kontak','/kontak'],[s.reg_nav||'Pendaftaran','/daftar']];
+const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)).join(' ');
+const bmap={'/about/profil':'banner_about','/about/struktur':'banner_struktur','/about/filosofi':'banner_filosofi','/proker':'banner_proker','/berita':'banner_berita','/galery':'banner_galery','/kontak':'banner_kontak','/daftar':'banner_daftar'};
+const banner=s[bmap[path.startsWith('/berita')?'/berita':path]]||s.banner_image;
+const act=p=>path===p?'nav-link nav-active':'nav-link';
+const E=escapeFn;
+const logo=(c)=> s.logo ? `<img src="${E(s.logo)}" alt="${E(s.site_name)}" class="h-10 w-auto">` : `<i class="bi bi-infinity text-3xl ${c}"></i><span class="font-head text-2xl font-bold tracking-wide text-white">${E(s.site_name)}</span>`;
+%>
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title><%= locals.title ? title+' | ' : '' %><%= s.site_name %></title>
+<% if(s.favicon){ %><link rel="icon" href="<%= s.favicon %>"><% } %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
+<link href="/css/app.css" rel="stylesheet">
+<style>:root{--brand:<%= rgb(s.color_primary) %>;--dark:<%= rgb(s.color_dark) %>;--foot:<%= rgb(s.color_footer) %>;--accent:<%= rgb(s.color_accent) %>}</style>
+</head><body class="font-body text-slate-800 overflow-x-hidden bg-white">
+<%
+const TZ={'Asia/Jakarta':'WIB','Asia/Makassar':'WITA','Asia/Jayapura':'WIT'}, tz=TZ[s.topbar_tz]?s.topbar_tz:'Asia/Jakarta', now=new Date();
+const cd=new Intl.DateTimeFormat('id-ID',{timeZone:tz,weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now);
+const ct=new Intl.DateTimeFormat('id-ID',{timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now).replace(/\./g,':');
+%>
+<div class="relative z-20 bg-[#050a14] text-white/80"><div class="mx-auto flex h-8 max-w-7xl items-center justify-between gap-3 px-5 text-xs">
+  <span class="flex min-w-0 items-center gap-1.5"><% if(s.topbar_location){ %><i class="bi bi-geo-alt-fill text-brand"></i><span class="truncate"><%= s.topbar_location %></span><% } %></span>
+  <% if(s.topbar_clock!=='off'){ %><span class="flex shrink-0 items-center gap-1.5"><i class="bi bi-clock"></i><time id="clock" data-tz="<%= tz %>"><span data-d class="hidden sm:inline"><%= cd %></span><span class="hidden sm:inline"> • </span><span data-t><%= ct %></span> <%= TZ[tz] %></time></span><% } %>
+</div></div>
+<nav id="nav" class="fixed inset-x-0 top-8 z-30 text-white">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-6">
+    <a href="/" class="flex items-center gap-2"><%- logo('text-blue-400') %></a>
+    <ul class="hidden items-center gap-4 text-sm lg:flex xl:gap-7">
+      <li><a href="/" class="<%= act('/') %>">Home</a></li>
+      <li class="group relative"><button class="nav-link <%= path.startsWith('/about')?'nav-active':'' %>">About <i class="bi bi-chevron-down text-[10px] leading-none"></i></button>
+        <div class="invisible absolute left-0 top-full pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          <div class="w-56 rounded-xl bg-white p-2 text-slate-700 shadow-xl"><% about.forEach(a=>{ %><a href="<%= a[1] %>" class="block rounded-lg px-3 py-2 text-sm hover:bg-brand hover:text-white"><%= a[0] %></a><% }) %></div></div></li>
+      <% links.slice(1).forEach(l=>{ %><li><a href="<%= l[1] %>" class="<%= act(l[1]) %>"><%= l[0] %></a></li><% }) %>
+    </ul>
+    <a href="/admin/login" class="btn btn-up hidden lg:inline-flex"><span>Login</span><span class="arr"><i class="bi bi-arrow-up"></i><i class="bi bi-arrow-up"></i></span></a>
+    <button id="menuBtn" class="text-3xl lg:hidden" aria-label="Buka menu"><i class="bi bi-list"></i></button>
+  </div>
+</nav>
+<div id="overlay" class="fixed inset-0 z-40 hidden bg-black/60 opacity-0"></div>
+<aside id="drawer" style="transform:translateX(100%)" class="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85%] flex-col overflow-y-auto bg-navy p-6 text-white">
+  <button id="menuClose" class="mb-6 self-end text-3xl" aria-label="Tutup menu"><i class="bi bi-x-lg"></i></button>
+  <a href="/" class="dl block border-b border-white/15 py-3 text-lg">Home</a>
+  <details class="dl border-b border-white/15"><summary class="flex cursor-pointer list-none items-center justify-between py-3 text-lg">About <i class="bi bi-chevron-down text-xs"></i></summary>
+    <% about.forEach(a=>{ %><a href="<%= a[1] %>" class="block py-2 pl-4 text-white/80"><%= a[0] %></a><% }) %></details>
+  <% links.slice(1).forEach(l=>{ %><a href="<%= l[1] %>" class="dl block border-b border-white/15 py-3 text-lg"><%= l[0] %></a><% }) %>
+  <a href="/admin/login" class="dl btn btn-up mt-6 w-fit"><span>Login</span><span class="arr"><i class="bi bi-arrow-up"></i><i class="bi bi-arrow-up"></i></span></a>
+</aside>
+<% if(!locals.home){ %>
+<section class="relative flex min-h-[340px] items-center justify-center bg-brand pb-16 pt-28 md:min-h-[440px]">
+  <% if(banner){ %><div class="absolute inset-0 overflow-hidden"><img src="<%= banner %>" alt="" class="h-full w-full object-cover"><div class="absolute inset-0 bg-black/25"></div></div><% } %>
+  <div class="absolute inset-x-0 bottom-0 z-10 flex translate-y-1/2 justify-center px-4"><h1 class="hero-in w-full max-w-[420px] rounded-full bg-navy px-6 py-3 text-center font-head text-2xl font-bold uppercase text-white shadow-lg md:py-4 md:text-4xl"><%= title %></h1></div>
+</section>
+<div class="h-14 md:h-16"></div>
+<% } %>

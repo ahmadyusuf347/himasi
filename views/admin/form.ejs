@@ -1,0 +1,14 @@
+<%- include('_top') %>
+<h1 class="mb-6 font-head text-3xl font-bold"><%= row.id?'Edit':'Tambah' %> <%= c.label %></h1>
+<form method="post" enctype="multipart/form-data" action="/admin/<%= key %>/<%= row.id||'' %>" class="max-w-2xl space-y-4 rounded-xl bg-white p-6 shadow-sm"><input type="hidden" name="_csrf" value="<%= csrf %>">
+<% c.fields.forEach(([n,l,t,opt])=>{ const v=row[n]??(t==='bool'?true:''); %><div><label class="mb-1 block text-sm font-medium"><%= l %></label>
+<% if(t==='textarea'){ %><textarea name="<%= n %>" rows="7" class="input"><%= v %></textarea>
+<% } else if(t==='select'){ %><select name="<%= n %>" class="input"><% opt.forEach(o=>{ const ov=Array.isArray(o)?o[0]:o, ol=Array.isArray(o)?o[1]:o; %><option value="<%= ov %>" <%= String(v)===ov?'selected':'' %>><%= ol %></option><% }) %></select>
+<% } else if(t==='image'){ %><% if(v){ %><img src="<%= v %>" class="mb-2 h-24 rounded-lg object-cover" alt=""><% } %><input type="file" name="<%= n %>" accept="image/*" class="text-sm"><p class="text-xs text-slate-500">Maks. 4 MB. Kosongkan jika tidak diganti.</p>
+<% } else if(t==='images'){ let ph=[]; try{ ph=JSON.parse(v||'[]'); }catch(e){} %>
+<% if(ph.length){ %><div class="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-5"><% ph.forEach(u=>{ %><div class="relative"><img src="<%= u %>" class="aspect-square w-full rounded-lg object-cover" alt=""><label class="absolute inset-x-0 bottom-0 flex cursor-pointer items-center gap-1 rounded-b-lg bg-black/65 px-2 py-1 text-xs text-white"><input type="checkbox" name="remove_<%= n %>" value="<%= u %>"> Hapus</label></div><% }) %></div><% } %>
+<input type="file" name="<%= n %>" accept="image/*" multiple class="text-sm"><p data-size class="mt-1 text-xs text-brand"></p><p class="text-xs text-slate-500">Pilih beberapa foto sekaligus (Ctrl/Shift di komputer, tahan lama di HP). Foto diperkecil otomatis sebelum diupload.</p>
+<% } else if(t==='bool'){ %><input type="checkbox" name="<%= n %>" <%= v?'checked':'' %> class="h-5 w-5">
+<% } else { %><input type="<%= t==='date'?'date':t==='number'?'number':'text' %>" name="<%= n %>" value="<%= t==='date'&&v?String(v).slice(0,10):v %>" class="input"><% } %></div><% }) %>
+<div class="flex gap-3 pt-2"><button class="btn-solid">Simpan</button><a href="/admin/<%= key %>" class="rounded-lg bg-slate-100 px-5 py-2.5 text-sm">Batal</a></div></form>
+<%- include('_bottom') %>

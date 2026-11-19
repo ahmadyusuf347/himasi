@@ -1,0 +1,41 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+@layer components {
+  .btn { @apply inline-flex items-center gap-3 rounded-full border-2 border-white p-1 pr-4 text-sm text-white; }
+  .btn > span:first-child { @apply rounded-full bg-white px-6 py-2 font-medium text-slate-900 transition-colors duration-300; }
+  .btn:hover > span:first-child { @apply bg-navy text-white; }
+  .btn-brand > span:first-child { @apply text-brand; }
+  .btn .arr { @apply relative inline-block h-5 w-5 overflow-hidden; }
+  .btn .arr i { @apply absolute inset-0 flex items-center justify-center text-base transition-transform duration-500 ease-in-out; }
+  .btn .arr i:last-child { transform: translate(-170%, 170%); }
+  .btn:hover .arr i:first-child { transform: translate(170%, -170%); }
+  .btn:hover .arr i:last-child { transform: translate(0, 0); }
+  .btn-solid { @apply inline-flex items-center gap-2 rounded-lg bg-brand text-white px-5 py-2.5 text-sm font-semibold transition-colors duration-300 hover:bg-navy; }
+  .input { @apply w-full rounded-lg border border-brand/60 bg-slate-100 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand; }
+  .card { @apply rounded-2xl border border-slate-400 bg-white overflow-hidden; }
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgb(255 255 255 / .55); } 70%, 100% { box-shadow: 0 0 0 14px rgb(255 255 255 / 0); } }
+
+/* ---- CSS biasa (di luar @layer agar tidak dibuang Tailwind) ---- */
+#nav { transition: top .3s, background-color .3s, box-shadow .3s; }
+#nav > div { transition: padding .3s; }
+#nav.is-stuck { top: 0; background-color: rgb(var(--brand)); box-shadow: 0 6px 20px rgb(0 0 0 / .25); }
+#nav.is-stuck > div { padding-top: .75rem; padding-bottom: .75rem; }
+#toTop { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 35; display: flex; height: 3.25rem; width: 3.25rem; align-items: center; justify-content: center; border-radius: 9999px; background: rgb(var(--brand)); color: #fff; font-size: 1.5rem; box-shadow: 0 0 0 2px #fff, 0 8px 20px rgb(0 0 0 / .3); opacity: 0; pointer-events: none; transform: translateY(14px); transition: opacity .3s, transform .3s, background-color .3s; }
+#toTop.show { opacity: 1; pointer-events: auto; transform: none; }
+#toTop:hover { background: rgb(var(--dark)); }
+.hover-lift { transition: translate .3s, box-shadow .3s, border-color .3s, background-color .3s; }
+.hover-lift:hover { translate: 0 -8px; box-shadow: 0 18px 40px rgb(0 0 0 / .12); border-color: rgb(var(--brand)); background-color: rgb(var(--brand) / .05); }
+.hover-lift .vm-ico { display: inline-block; transition: transform .4s; }
+.hover-lift:hover .vm-ico { transform: scale(1.18) rotate(-8deg); }
+.hover-lift h3 { transition: color .3s; }
+.hover-lift:hover h3 { color: rgb(var(--brand)); }
+.nav-link { display: inline-flex; height: 2.25rem; align-items: center; gap: .25rem; border-bottom: 2px solid transparent; padding: 0 .25rem; transition: color .3s, border-color .3s; }
+.nav-link:hover, .group:hover > .nav-link { border-bottom-color: #fff; color: #ffe08a; }
+.nav-active { color: #ffe08a; }
+/* Tombol Login: panah lurus ke atas, keluar lewat atas lalu masuk dari bawah */
+.btn.btn-up .arr i:last-child { transform: translate(0, 170%); }
+.btn.btn-up:hover .arr i:first-child { transform: translate(0, -170%); }
+.btn.btn-up:hover .arr i:last-child { transform: translate(0, 0); }

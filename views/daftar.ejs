@@ -1,0 +1,25 @@
+<%- include('partials/top',{title:s.reg_nav||'Pendaftaran'}) %>
+<main class="mx-auto max-w-3xl px-5">
+  <div class="mb-8 text-center" data-reveal><h2 class="font-head text-3xl font-bold uppercase md:text-4xl"><%= s.reg_title %></h2>
+    <p class="mt-2 font-light text-slate-600 md:text-lg"><%= s.reg_desc %></p></div>
+  <% if(sent){ %>
+    <div class="rounded-2xl border border-green-300 bg-green-50 p-8 text-center" role="status"><i class="bi bi-check-circle-fill text-5xl text-green-600"></i><p class="mt-3 text-lg"><%= s.reg_success %></p><a href="/" class="btn-solid mt-6">Kembali ke Beranda</a></div>
+  <% } else if(closed){ %>
+    <div class="rounded-2xl border border-amber-300 bg-amber-50 p-8 text-center" role="status"><i class="bi bi-lock-fill text-5xl text-amber-600"></i><p class="mt-3 text-lg"><%= s.reg_closed %></p></div>
+  <% } else { %>
+  <form method="post" action="/daftar" class="card space-y-5 p-6 md:p-8" data-reveal novalidate>
+    <% if(errs && errs.length){ %><ul class="rounded-lg bg-red-100 p-4 text-sm text-red-800" role="alert"><% errs.forEach(e=>{ %><li><i class="bi bi-exclamation-circle mr-1"></i><%= e %></li><% }) %></ul><% } %>
+    <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <% fields.forEach(f=>{ const k='f_'+f.id, v=old[k], o=optsOf(f), req=f.required?'required':''; %>
+    <div><label for="<%= k %>" class="mb-1 block text-sm font-medium"><%= f.label %><% if(f.required){ %> <span class="text-red-500" aria-hidden="true">*</span><% } %></label>
+      <% if(f.type==='textarea'){ %><textarea id="<%= k %>" name="<%= k %>" rows="5" maxlength="2000" placeholder="<%= f.placeholder||'' %>" class="input" <%= req %>><%= v||'' %></textarea>
+      <% } else if(f.type==='select'){ %><select id="<%= k %>" name="<%= k %>" class="input" <%= req %>><option value="">Pilih...</option><% o.forEach(x=>{ %><option value="<%= x %>" <%= v===x?'selected':'' %>><%= x %></option><% }) %></select>
+      <% } else if(f.type==='radio'||f.type==='checkbox'){ const vs=[].concat(v||[]); %><div class="space-y-2" id="<%= k %>"><% o.forEach(x=>{ %><label class="flex items-center gap-2 text-sm"><input type="<%= f.type %>" name="<%= k %>" value="<%= x %>" <%= vs.includes(x)?'checked':'' %> class="h-4 w-4 accent-[rgb(var(--brand))]"> <%= x %></label><% }) %></div>
+      <% } else { %><input id="<%= k %>" name="<%= k %>" type="<%= f.type==='tel'?'tel':f.type==='email'?'email':'text' %>" inputmode="<%= f.type==='number'?'numeric':f.type==='tel'?'tel':f.type==='email'?'email':'text' %>" maxlength="200" placeholder="<%= f.placeholder||'' %>" value="<%= v||'' %>" class="input" <%= req %>>
+      <% } %></div>
+    <% }) %>
+    <button class="btn-solid"><%= s.reg_button %> <i class="bi bi-send"></i></button>
+  </form>
+  <% } %>
+</main>
+<%- include('partials/bottom') %>
