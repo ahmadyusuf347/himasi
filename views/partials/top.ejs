@@ -6,7 +6,7 @@ const bmap={'/about/profil':'banner_about','/about/struktur':'banner_struktur','
 const banner=s[bmap[path.startsWith('/berita')?'/berita':path]]||s.banner_image;
 const act=p=>path===p?'nav-link nav-active':'nav-link';
 const E=escapeFn;
-const logo=(c)=> s.logo ? `<img src="${E(s.logo)}" alt="${E(s.site_name)}" class="h-10 w-auto">` : `<i class="bi bi-infinity text-3xl ${c}"></i><span class="font-head text-2xl font-bold tracking-wide text-white">${E(s.site_name)}</span>`;
+const logo=(c)=> s.logo ? `<img src="${E(s.logo)}" alt="${E(s.site_name)}" class="h-12 w-auto">` : `<i class="bi bi-infinity text-3xl ${c}"></i><span class="font-head text-2xl font-bold tracking-wide text-white">${E(s.site_name)}</span>`;
 %>
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
