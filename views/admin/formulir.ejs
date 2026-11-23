@@ -1,0 +1,19 @@
+<%- include('_top') %>
+<% const tl=Object.fromEntries(c.fields.find(f=>f[0]==='type')[3]); %>
+<div class="mb-6 flex flex-wrap items-center justify-between gap-3"><h1 class="font-head text-3xl font-bold">Form Pendaftaran</h1><a href="/daftar" target="_blank" rel="noopener noreferrer" class="text-sm text-brand underline"><i class="bi bi-box-arrow-up-right"></i> Lihat halaman</a></div>
+<% if(saved){ %><p class="mb-4 rounded-lg bg-green-100 p-3 text-sm text-green-800" role="status">Pengaturan halaman disimpan.</p><% } %>
+<form method="post" action="/admin/formulir/settings" class="mb-8 max-w-3xl space-y-4 rounded-xl bg-white p-6 shadow-sm"><input type="hidden" name="_csrf" value="<%= csrf %>">
+  <div><h2 class="font-head text-xl font-bold">Teks Halaman Pendaftaran</h2><p class="text-sm text-slate-500">Ubah judul dan teks agar bisa dipakai untuk pendaftaran lain (mis. Open Recruitment, Seminar, Lomba).</p></div>
+  <% REGSET.forEach(([k,l,t])=>{ %><div><label class="mb-1 block text-sm font-medium"><%= l %></label>
+    <% if(t==='bool'){ %><label class="inline-flex cursor-pointer items-center gap-2 text-sm"><input type="checkbox" name="<%= k %>" <%= S[k]==='on'?'checked':'' %> class="h-5 w-5"> Aktif (formulir dapat diisi pengunjung)</label>
+    <% } else if(t==='textarea'){ %><textarea name="<%= k %>" rows="3" class="input"><%= S[k]||'' %></textarea>
+    <% } else { %><input name="<%= k %>" value="<%= S[k]||'' %>" class="input"><% } %></div><% }) %>
+  <button class="btn-solid">Simpan Teks Halaman</button></form>
+<div class="mb-4 flex items-center justify-between"><h2 class="font-head text-xl font-bold">Pertanyaan Formulir</h2><a href="/admin/formulir/new" class="btn-solid"><i class="bi bi-plus-lg"></i> Tambah Pertanyaan</a></div>
+<div class="overflow-x-auto rounded-xl bg-white shadow-sm"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Urutan</th><th class="p-3">Pertanyaan</th><th class="p-3">Tipe</th><th class="p-3">Wajib</th><th class="p-3 text-right">Aksi</th></tr></thead><tbody>
+<% if(!rows.length){ %><tr><td class="p-6 text-slate-500" colspan="5">Belum ada pertanyaan.</td></tr><% } %>
+<% rows.forEach(f=>{ %><tr class="border-t"><td class="p-3"><%= f.sort %></td><td class="p-3 font-medium"><%= f.label %></td><td class="p-3"><%= tl[f.type]||f.type %></td><td class="p-3"><%= f.required?'Ya':'Tidak' %></td>
+<td class="flex justify-end gap-2 p-3"><a href="/admin/formulir/<%= f.id %>/edit" class="rounded-lg bg-slate-100 px-3 py-1.5">Edit</a>
+<form method="post" action="/admin/formulir/<%= f.id %>/delete" data-confirm="Hapus pertanyaan ini?"><input type="hidden" name="_csrf" value="<%= csrf %>"><button class="rounded-lg bg-red-100 px-3 py-1.5 text-red-700">Hapus</button></form></td></tr><% }) %></tbody></table></div>
+<p class="mt-3 text-xs text-slate-500">Mengubah/menghapus pertanyaan tidak mengubah data pendaftar yang sudah masuk. Data lama tetap tampil sesuai pertanyaan saat itu.</p>
+<%- include('_bottom') %>

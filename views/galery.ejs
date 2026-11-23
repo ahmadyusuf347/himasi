@@ -1,0 +1,11 @@
+<%- include('partials/top',{title:'Galery'}) %>
+<main class="mx-auto max-w-7xl px-5"><% if(!items.length){ %><p class="text-center text-slate-500">Belum ada album.</p><% } %>
+  <div class="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3"><% items.forEach(g=>{
+    let list=[]; try{ list=JSON.parse(g.photos||'[]'); }catch(e){} if(!list.length && g.image) list=[g.image];
+    const cover=g.image||list[0]; %>
+    <a href="#" data-photos="<%= JSON.stringify(list) %>" data-title="<%= g.title||'' %>" class="group relative block aspect-square overflow-hidden bg-[#ccc]" data-reveal>
+      <% if(cover){ %><img src="<%= cover %>" alt="<%= g.title||'' %>" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"><% } else { %><i class="bi bi-image-fill absolute inset-0 flex items-center justify-center text-6xl text-black"></i><% } %>
+      <span class="absolute right-2 top-2 flex h-6 min-w-6 items-center justify-center gap-1 rounded-md bg-white/90 px-1.5 text-xs text-brand sm:right-5 sm:top-5 sm:h-8 sm:min-w-8 sm:rounded-lg sm:px-2 sm:text-base"><i class="bi bi-stack"></i><% if(list.length>1){ %><span class="text-xs font-semibold"><%= list.length %></span><% } %></span>
+      <% if(g.title){ %><div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white/80 to-transparent px-3 pb-3 pt-8 sm:px-6 sm:pb-6 sm:pt-14"><p class="line-clamp-2 text-sm font-semibold leading-snug text-brand sm:text-lg"><%= g.title %></p><p class="text-[11px] text-black sm:text-sm"><%= fd(g.date) %></p></div><% } %></a><% }) %></div></main>
+<%- include('partials/lightbox') %>
+<%- include('partials/bottom') %>

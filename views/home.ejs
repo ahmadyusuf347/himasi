@@ -1,0 +1,42 @@
+<%- include('partials/top',{home:true,title:''}) %>
+<%
+const HX=/^#[0-9a-fA-F]{6}$/, pick=(v,d)=>HX.test(v||'')?v:d;
+const hf=pick(s.hero_from,s.color_primary), hm=pick(s.hero_mid,s.color_dark), ht=pick(s.hero_to,'#000000'), hd=['90deg','180deg','135deg','0deg'].includes(s.hero_dir)?s.hero_dir:'90deg';
+const hs=(slides&&slides.length)?slides:[{title:s.home_title,title2:s.home_title2,description:s.home_desc,image:s.hero_image,button_text:'Selengkapnya',button_url:'/about/profil'}];
+%>
+<section id="slider" class="relative pb-32 pt-36 text-white md:pb-36" style="background:linear-gradient(<%= hd %>,<%= hf %>,<%= hm %> 50%,<%= ht %>)">
+  <div class="mx-auto max-w-7xl px-5">
+    <div class="grid">
+      <% hs.forEach((h,i)=>{ %>
+      <div data-slide class="col-start-1 row-start-1 grid items-center gap-10 md:min-h-[400px] md:grid-cols-[1.1fr_1fr]" <% if(i){ %>style="visibility:hidden;opacity:0"<% } %>>
+        <div><h1 class="s-in font-head text-4xl font-bold uppercase leading-tight md:text-6xl"><%= h.title %><% if(h.title2){ %><br><span class="text-accent"><%= h.title2 %></span><% } %></h1>
+          <p class="s-in mt-5 max-w-xl font-head text-xl font-light leading-snug text-white/90 md:text-2xl"><%= h.description %></p>
+          <% if(h.button_text){ %><a href="<%= safeUrl(h.button_url) %>" class="s-in btn btn-brand btn-pulse mt-7"><span><%= h.button_text %></span><span class="arr"><i class="bi bi-arrow-up-right"></i><i class="bi bi-arrow-up-right"></i></span></a><% } %></div>
+        <div class="s-in"><% if(h.image){ %><img src="<%= h.image %>" alt="" class="aspect-[16/11] w-full object-cover"><% } else { %><div class="flex aspect-[16/11] items-center justify-center bg-[#ccc] text-7xl text-black"><i class="bi bi-image-fill"></i></div><% } %></div>
+      </div><% }) %>
+    </div>
+    <% if(hs.length>1){ %><div class="mt-8 flex gap-3"><% hs.forEach((h,i)=>{ %><button data-dot aria-label="Slide <%= i+1 %>" class="h-6 w-14"><span class="block h-[3px] w-full bg-white/35"><span data-fill class="block h-full w-0 bg-white"></span></span></button><% }) %></div><% } %>
+  </div>
+  <div class="absolute inset-x-0 bottom-0 flex translate-y-1/2 justify-center px-4"><h2 class="hero-in w-full max-w-[420px] rounded-full bg-brand py-3 text-center font-head text-2xl font-bold uppercase shadow-lg md:py-4 md:text-4xl">Sambutan Ketua</h2></div>
+</section>
+
+<section class="mx-auto mt-24 grid max-w-6xl items-center gap-10 px-5 md:grid-cols-[320px_1fr]" data-reveal>
+  <div class="mx-auto h-72 w-72 overflow-hidden rounded-full border-8 border-brand bg-slate-200">
+    <% if(s.ketua_photo){ %><img src="<%= s.ketua_photo %>" class="h-full w-full object-cover" alt="<%= s.ketua_name %>"><% } else { %><div class="flex h-full items-center justify-center text-7xl text-slate-400"><i class="bi bi-person-fill"></i></div><% } %></div>
+  <div><p class="whitespace-pre-line text-justify text-lg font-light leading-relaxed md:text-xl"><%= s.sambutan %></p>
+    <p class="mt-5 text-lg font-semibold"><%= s.ketua_name %></p><p class="text-brand"><%= s.ketua_title %></p></div>
+</section>
+
+<section class="mx-auto mt-24 max-w-7xl px-5">
+  <div class="mb-8 flex items-end justify-between"><h2 class="font-head text-4xl font-semibold uppercase">Berita Terbaru</h2><a href="/berita" class="text-sm font-semibold text-brand">Lihat semua <i class="bi bi-arrow-right"></i></a></div>
+  <% if(!news.length){ %><p class="text-slate-500">Belum ada berita.</p><% } %>
+  <div class="grid gap-6 md:grid-cols-3"><% news.forEach(n=>{ %><%- include('partials/newscard',{n}) %><% }) %></div>
+</section>
+
+<section class="mx-auto mt-24 max-w-7xl px-5" data-reveal>
+  <div class="rounded-3xl p-10 text-center text-white md:p-16" style="background:linear-gradient(110deg,rgb(var(--dark)),rgb(var(--brand)))">
+    <h2 class="font-head text-4xl font-bold uppercase md:text-5xl"><%= s.cta_title %></h2>
+    <p class="mx-auto mt-4 max-w-xl font-light text-white/90"><%= s.cta_desc %></p>
+    <a href="/kontak" class="btn btn-brand btn-pulse mt-7"><span>Hubungi Kami</span><span class="arr"><i class="bi bi-arrow-up-right"></i><i class="bi bi-arrow-up-right"></i></span></a></div>
+</section>
+<%- include('partials/bottom') %>

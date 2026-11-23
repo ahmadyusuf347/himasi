@@ -1,0 +1,4 @@
+<%- include('partials/top',{title:'Berita'}) %>
+<main class="mx-auto max-w-6xl px-5"><% if(!news.length){ %><p class="text-center text-slate-500">Belum ada berita.</p><% } %>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"><% news.forEach(n=>{ %><%- include('partials/newscard',{n}) %><% }) %></div></main>
+<%- include('partials/bottom') %>

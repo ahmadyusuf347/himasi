@@ -1,0 +1,23 @@
+<%
+const ql=(s.quick_links||'').split('\n').filter(Boolean).map(l=>l.split('|'));
+const menu=[['Home','/'],['About','/about/profil'],['Struktur','/about/struktur'],['Filosofi Logo','/about/filosofi'],['Berita','/berita'],['Gallery','/galery'],['Kontak','/kontak'],[s.reg_nav||'Pendaftaran','/daftar']];
+%>
+<footer class="bg-foot text-white mt-20">
+  <div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-[1.2fr_1fr_1fr_1.3fr]">
+    <div class="flex flex-col justify-between gap-8">
+      <a href="/" class="flex items-center gap-2"><% if(s.logo){ %><img src="<%= s.logo %>" class="h-10" alt=""><% } else { %><i class="bi bi-infinity text-3xl text-blue-500"></i><span class="font-head text-2xl font-bold"><%= s.site_name %></span><% } %></a>
+      <div><p class="mb-3 font-semibold">Follow Us :</p><div class="flex gap-4 text-2xl text-brand">
+        <a href="<%= safeUrl(s.instagram) %>" aria-label="Instagram" rel="noopener noreferrer" target="_blank"><i class="bi bi-instagram"></i></a><a href="<%= safeUrl(s.tiktok) %>" aria-label="TikTok"><i class="bi bi-tiktok"></i></a><a href="<%= safeUrl(s.youtube) %>" aria-label="YouTube"><i class="bi bi-youtube"></i></a></div></div>
+    </div>
+    <div class="md:border-l md:border-white/20 md:pl-8"><h3 class="mb-3 text-xl font-medium">Quick Links</h3><% ql.forEach(l=>{ %><a href="<%= safeUrl(l[1]) %>" class="block py-1 text-lg font-light text-white/80 hover:text-white"><%= l[0] %></a><% }) %></div>
+    <div class="md:border-l md:border-white/20 md:pl-8"><h3 class="mb-3 text-xl font-medium">Menu</h3><% menu.forEach(l=>{ %><a href="<%= l[1] %>" class="block py-1 text-lg font-light text-white/80 hover:text-white"><%= l[0] %></a><% }) %></div>
+    <div class="md:border-l md:border-white/20 md:pl-8"><h3 class="mb-3 text-xl font-medium">Contact</h3>
+      <p class="py-1 text-lg font-light text-white/80"><i class="bi bi-geo-alt mr-2"></i><%= s.address %></p><p class="py-1 text-lg font-light text-white/80"><i class="bi bi-telephone mr-2"></i><%= s.phone %></p>
+      <a href="mailto:<%= s.email %>" class="block py-1 text-lg font-light text-white/80 underline"><i class="bi bi-envelope mr-2"></i><%= s.email %></a></div>
+  </div>
+  <p class="mx-5 border-t border-white/20 py-6 text-center text-xs text-white/60"><%= s.footer_copyright %></p>
+</footer>
+<button id="toTop" aria-label="Kembali ke atas"><i class="bi bi-arrow-up" style="-webkit-text-stroke:1px"></i></button>
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+<script src="/js/app.js"></script></body></html>

@@ -1,0 +1,8 @@
+<%- include('_top') %>
+<div class="mb-6 flex items-center justify-between"><h1 class="font-head text-3xl font-bold"><%= c.label %></h1><a href="/admin/<%= key %>/new" class="btn-solid"><i class="bi bi-plus-lg"></i> Tambah</a></div>
+<div class="overflow-x-auto rounded-xl bg-white shadow-sm"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-slate-500"><tr><% c.cols.forEach(k=>{ %><th class="p-3"><%= k %></th><% }) %><th class="p-3 text-right">Aksi</th></tr></thead><tbody>
+<% if(!rows.length){ %><tr><td class="p-6 text-slate-500" colspan="9">Belum ada data. Klik Tambah untuk membuat yang pertama.</td></tr><% } %>
+<% rows.forEach(r=>{ %><tr class="border-t"><% c.cols.forEach(k=>{ %><td class="p-3"><%= r[k]===1||r[k]===true?'Ya':r[k]===0||r[k]===false?'Tidak':r[k] %></td><% }) %>
+<td class="flex justify-end gap-2 p-3"><a href="/admin/<%= key %>/<%= r.id %>/edit" class="rounded-lg bg-slate-100 px-3 py-1.5">Edit</a>
+<form method="post" action="/admin/<%= key %>/<%= r.id %>/delete" data-confirm="Hapus data ini?"><input type="hidden" name="_csrf" value="<%= csrf %>"><button class="rounded-lg bg-red-100 px-3 py-1.5 text-red-700">Hapus</button></form></td></tr><% }) %></tbody></table></div>
+<%- include('_bottom') %>

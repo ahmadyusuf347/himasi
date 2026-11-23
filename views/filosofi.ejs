@@ -1,0 +1,9 @@
+<%- include('partials/top',{title:'Filosofi Logo'}) %>
+<% const dl=safeUrl(s.filosofi_file||s.filosofi_image||s.logo); %>
+<main class="mx-auto grid max-w-5xl items-center gap-10 px-5 md:grid-cols-[1fr_1.3fr]">
+  <div data-reveal class="flex min-h-64 items-center justify-center rounded-3xl bg-slate-900 p-10">
+    <% if(s.filosofi_image||s.logo){ %><img src="<%= s.filosofi_image||s.logo %>" alt="Logo" class="max-h-56 object-contain"><% } else { %><i class="bi bi-infinity text-8xl text-blue-500"></i><% } %></div>
+  <div data-reveal><h2 class="font-head text-3xl font-bold uppercase md:text-4xl">Makna Logo</h2><p class="mt-4 whitespace-pre-line text-justify font-light leading-relaxed md:text-lg"><%= s.filosofi || 'Penjelasan filosofi logo belum diisi. Isi melalui Dashboard CMS > Pengaturan > About.' %></p>
+    <% if(dl!=='#'){ %><a href="<%= dl %>" download target="_blank" rel="noopener" class="btn-solid mt-6"><i class="bi bi-download"></i> Download Logo</a><% } %></div>
+</main>
+<%- include('partials/bottom') %>

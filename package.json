@@ -1,0 +1,36 @@
+{
+  "name": "hima-si",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "css": "tailwindcss -i ./src/input.css -o ./public/css/app.css --minify",
+    "css:watch": "tailwindcss -i ./src/input.css -o ./public/css/app.css --watch",
+    "dev": "concurrently \"npm:css:watch\" \"node --watch local.js\"",
+    "build": "npm run css",
+    "start": "node local.js",
+    "postinstall": "node scripts/vendor.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "bootstrap-icons": "1.11.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "gsap": "3.12.5",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "tailwindcss": "^3.4.17"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  }
+}
