@@ -14,7 +14,7 @@ const hs=(slides&&slides.length)?slides:[{title:s.home_title,title2:s.home_title
         <div><h1 class="s-in font-head text-4xl font-bold uppercase leading-tight md:text-6xl"><%= h.title %><% if(h.title2){ %><br><span class="text-accent"><%= h.title2 %></span><% } %></h1>
           <p class="s-in mt-5 max-w-xl font-head text-xl font-light leading-snug text-white/90 md:text-2xl"><%= h.description %></p>
           <% if(h.button_text){ %><a href="<%= safeUrl(h.button_url) %>" class="s-in btn btn-brand btn-pulse mt-7"><span><%= h.button_text %></span><span class="arr"><i class="bi bi-arrow-up-right"></i><i class="bi bi-arrow-up-right"></i></span></a><% } %></div>
-        <div class="s-in"><% if(h.image){ %><img src="<%= h.image %>" alt="" class="aspect-[16/11] w-full object-cover"><% } else { %><div class="flex aspect-[16/11] items-center justify-center bg-[#ccc] text-7xl text-black"><i class="bi bi-image-fill"></i></div><% } %></div>
+        <div class="s-in"><% if(h.image){ %><img src="<%= h.image %>" alt="" class="aspect-[16/11] w-full object-cover rounded-2xl"><% } else { %><div class="flex aspect-[16/11] items-center justify-center bg-[#ccc] text-7xl text-black"><i class="bi bi-image-fill"></i></div><% } %></div>
       </div><% }) %>
     </div>
     <% if(hs.length>1){ %><div class="mt-8 flex gap-3"><% hs.forEach((h,i)=>{ %><button data-dot aria-label="Slide <%= i+1 %>" class="h-6 w-14"><span class="block h-[3px] w-full bg-white/35"><span data-fill class="block h-full w-0 bg-white"></span></span></button><% }) %></div><% } %>
