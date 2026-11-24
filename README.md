@@ -59,9 +59,9 @@ git push -u origin main
 
 ## Langkah 4 — Mulai mengisi konten
 Buka `https://domain-anda/admin` → login dengan `ADMIN_USER` / `ADMIN_PASS`:
-- **Pengaturan Situs**: logo, favicon, warna tema, **warna background hero Home** (3 warna + arah gradasi), **lokasi & jam di bar atas** (zona WIB/WITA/WIT), banner tiap halaman, sambutan, profil, visi/misi, filosofi logo + file download, kontak, sosmed.
+- **Pengaturan Situs**: logo, favicon, warna tema, **background hero Home** (pilih **Gradasi warna** atau **Gambar**, lengkap dengan pengaturan kegelapan lapisan agar teks tetap terbaca), **gambar background halaman Login** (kosong = pola bawaan), **lokasi & jam di bar atas** (zona WIB/WITA/WIT), banner tiap halaman, sambutan, profil, visi/misi, filosofi logo + file download, kontak, sosmed. Setiap gambar punya centang **Hapus gambar ini**; foto besar diperkecil otomatis di browser.
 - **Slider Home**, **Berita**, **Proker**, **Galery** (album banyak foto).
-- **Struktur**: unggah gambar bagan organisasi (**JPG, PNG, WebP, AVIF, GIF**). Gambar tampil utuh/pas mengikuti lebar halaman dan bisa diperbesar dengan klik. Foto di atas 3,5 MB diperkecil otomatis di browser. Teks di bawah judul dan deskripsi gambar juga bisa diubah.
+- **Struktur**: isi dan ubah bagan organisasi dari data, bukan gambar. Setiap orang punya **Nama, Jabatan, NIM (opsional), Foto (opsional)** dan **Posisi di bagan**: *Pimpinan* (rantai atas, mis. Warek III, Ketua, Wakil), *BPH* (cabang samping: Sekretaris, Bendahara; kiri-kanan mengikuti urutan) atau *Anggota Divisi* (isi **Nama Divisi**; jabatan `Ketua` menjadi ketua divisi, selain itu masuk daftar *Anggota* bernomor). Bisa **tambah, edit, hapus**, dan atur urutan. Isi awal mengikuti `struktur.pdf` sebagai contoh — ganti dengan data asli. Bagan lengkap dengan garis penghubung tampil pada layar ≥ 1280 px; di layar lebih kecil kartu tersusun menumpuk.
 - **Form Pendaftaran**: di bagian atas halaman ini Anda mengubah **nama menu, judul, deskripsi, teks tombol, pesan sukses/tutup, dan buka/tutup pendaftaran** (agar bisa dipakai untuk pendaftaran lain, mis. Open Recruitment atau seminar). Di bawahnya, tambah/ubah/hapus pertanyaan (teks, angka, HP, email, dropdown, radio, checkbox, **Upload File**), tandai wajib, atur urutan.
 - **Data Pendaftar**: lihat, hapus, **Unduh Excel (.xlsx)** yang sudah rapi (judul, header berwarna, filter, baris beku, NIM/HP tetap utuh, plus lembar *Ringkasan* jumlah & persen tiap pilihan), **CSV**, dan **Hapus Semua** untuk memulai periode pendaftaran baru (unduh dulu sebelum menghapus).
 - **Pesan Masuk**: pesan dari halaman Kontak.
@@ -69,7 +69,7 @@ Buka `https://domain-anda/admin` → login dengan `ADMIN_USER` / `ADMIN_PASS`:
 ### Tipe isian "Upload File" (mis. foto KTM, CV)
 Di **Form Pendaftaran → Tambah Pertanyaan**, pilih tipe **Upload File**, lalu isi kolom *Pilihan* dengan jenis file yang diizinkan dipisah koma, mis. `jpg, png, pdf` (tersedia: jpg, png, webp, pdf, docx; kosong = jpg, png, pdf). Batas **2 MB per file**; foto besar diperkecil otomatis di browser pengunjung.
 File disimpan **privat** (bucket `registrations`) dan hanya bisa diunduh admin lewat **Data Pendaftar** (tautan berlaku 60 detik). File ikut terhapus saat data pendaftarnya dihapus. Di Excel, nama file menjadi tautan (perlu login admin). Karena batas request Vercel ±4,5 MB, sebaiknya maksimal 2 pertanyaan Upload File per form.
-> Sudah pernah menjalankan `supabase.sql` sebelumnya? Jalankan lagi (aman diulang) agar bucket `registrations` terbentuk.
+> Sudah pernah menjalankan `supabase.sql` sebelumnya? Jalankan lagi (aman diulang) agar bucket `media` menerima **AVIF** dan tabel **Struktur** (`members`, kolom NIM & Divisi) tersedia beserta izinnya.
 
 > Sudah pernah menjalankan `supabase.sql` sebelumnya? Jalankan lagi (aman diulang) agar bucket `media` menerima format **AVIF**.
 

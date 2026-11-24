@@ -2,10 +2,12 @@
 <%
 const HX=/^#[0-9a-fA-F]{6}$/, pick=(v,d)=>HX.test(v||'')?v:d;
 const hf=pick(s.hero_from,s.color_primary), hm=pick(s.hero_mid,s.color_dark), ht=pick(s.hero_to,'#000000'), hd=['90deg','180deg','135deg','0deg'].includes(s.hero_dir)?s.hero_dir:'90deg';
+const useImg=s.hero_bg_mode==='image' && s.hero_bg_image && safeUrl(s.hero_bg_image)!=='#', ov=['0','25','40','55','70'].includes(s.hero_overlay)?s.hero_overlay:'40';
 const hs=(slides&&slides.length)?slides:[{title:s.home_title,title2:s.home_title2,description:s.home_desc,image:s.hero_image,button_text:'Selengkapnya',button_url:'/about/profil'}];
 %>
 <section id="slider" class="relative pb-32 pt-36 text-white md:pb-36" style="background:linear-gradient(<%= hd %>,<%= hf %>,<%= hm %> 50%,<%= ht %>)">
-  <div class="mx-auto max-w-7xl px-5">
+  <% if(useImg){ %><img src="<%= s.hero_bg_image %>" alt="" fetchpriority="high" class="absolute inset-0 h-full w-full object-cover"><div class="absolute inset-0 bg-black" style="opacity:<%= ov/100 %>"></div><% } %>
+  <div class="relative z-10 mx-auto max-w-7xl px-5">
     <div class="grid">
       <% hs.forEach((h,i)=>{ %>
       <div data-slide class="col-start-1 row-start-1 grid items-center gap-10 md:min-h-[400px] md:grid-cols-[1.1fr_1fr]" <% if(i){ %>style="visibility:hidden;opacity:0"<% } %>>
@@ -17,7 +19,7 @@ const hs=(slides&&slides.length)?slides:[{title:s.home_title,title2:s.home_title
     </div>
     <% if(hs.length>1){ %><div class="mt-8 flex gap-3"><% hs.forEach((h,i)=>{ %><button data-dot aria-label="Slide <%= i+1 %>" class="h-6 w-14"><span class="block h-[3px] w-full bg-white/35"><span data-fill class="block h-full w-0 bg-white"></span></span></button><% }) %></div><% } %>
   </div>
-  <div class="absolute inset-x-0 bottom-0 flex translate-y-1/2 justify-center px-4"><h2 class="hero-in w-full max-w-[420px] rounded-full bg-brand py-3 text-center font-head text-2xl font-bold uppercase shadow-lg md:py-4 md:text-4xl">Sambutan Ketua</h2></div>
+  <div class="absolute inset-x-0 bottom-0 z-10 flex translate-y-1/2 justify-center px-4"><h2 class="hero-in w-full max-w-[420px] rounded-full bg-brand py-3 text-center font-head text-2xl font-bold uppercase shadow-lg md:py-4 md:text-4xl">Sambutan Ketua</h2></div>
 </section>
 
 <section class="mx-auto mt-24 grid max-w-6xl items-center gap-10 px-5 md:grid-cols-[320px_1fr]" data-reveal>
