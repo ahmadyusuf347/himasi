@@ -14,7 +14,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.45.0",
+    "@supabase/supabase-js": "^2.119.2",
     "bootstrap-icons": "1.11.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
