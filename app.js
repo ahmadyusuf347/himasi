@@ -175,7 +175,12 @@ app.post('/daftar', regGate, regUpload, w(async (q, r) => {
     let v = f.type === 'checkbox' ? [].concat(raw || []).map(x => clean(x, 200)).filter(Boolean) : clean([].concat(raw ?? '')[0], f.type === 'textarea' ? 2000 : 200);
     const empty = Array.isArray(v) ? !v.length : !v;
     if (empty) { if (f.required) errs.push(`${L} wajib diisi.`); continue; }
-    if (f.type === 'tel' && !/^\+?[0-9][0-9\s-]{7,17}$/.test(v)) errs.push(`${L} tidak valid.`);
+    const fieldName = L.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    const isNim = fieldName === 'nim' || fieldName.startsWith('nim');
+    const isPhone = ['nohp', 'nomorhp', 'nohandphone', 'nomorhandphone', 'notelepon', 'nomortelepon', 'phone', 'telephone', 'whatsapp'].some(name => fieldName.includes(name));
+    if (isNim && !/^\d{13}$/.test(v)) errs.push(`${L} harus terdiri dari tepat 13 angka.`);
+    else if (isPhone && !/^\d{10,12}$/.test(v)) errs.push(`${L} harus terdiri dari 10 sampai 12 angka.`);
+    else if (f.type === 'tel' && !/^\+?[0-9][0-9\s-]{7,17}$/.test(v)) errs.push(`${L} tidak valid.`);
     else if (f.type === 'number' && !/^\d{1,20}$/.test(v)) errs.push(`${L} harus berupa angka.`);
     else if (f.type === 'email' && !EMAIL.test(v)) errs.push(`${L} tidak valid.`);
     else if ((f.type === 'select' || f.type === 'radio') && !opts.includes(v)) errs.push(`Pilihan ${L} tidak valid.`);
