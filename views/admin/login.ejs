@@ -22,9 +22,9 @@ const lines=[]; pts.forEach((a,i)=>{ pts.map((b,j)=>[j,Math.hypot(a[0]-b[0],a[1]
   <form method="post" action="/admin/login" class="w-full max-w-md">
     <h1 class="text-4xl font-bold">Login</h1><p class="mb-10 mt-1 text-sm">Welcome! Silahkan login untuk management website</p>
     <% if(err){ %><p class="mb-4 rounded-lg bg-red-100 p-3 text-sm text-red-700" role="alert"><%= err %></p><% } %>
-    <label class="text-sm">User Name</label><input name="username" required autofocus autocomplete="username" maxlength="100" class="mb-3 mt-1 block h-14 w-full rounded-lg border border-brand bg-[#e6e6e6] px-4 outline-none focus:ring-2 focus:ring-brand">
-    <label class="text-sm">Password</label><input type="password" name="password" required autocomplete="current-password" maxlength="200" class="mt-1 block h-14 w-full rounded-lg border border-brand bg-[#e6e6e6] px-4 outline-none focus:ring-2 focus:ring-brand">
-    <button class="mt-16 h-14 w-full rounded-lg border border-brand bg-[#e6e6e6] text-lg font-bold tracking-wide transition hover:bg-brand hover:text-white">LOGIN</button>
+    <label class="text-sm">User Name</label><input name="username" required autofocus autocomplete="username" maxlength="100" class="mb-3 mt-1 block h-14 w-full border border-brand bg-[#e6e6e6] px-4 outline-none focus:ring-2 focus:ring-brand">
+    <label class="text-sm">Password</label><input type="password" name="password" required autocomplete="current-password" maxlength="200" class="mt-1 block h-14 w-full border border-brand bg-[#e6e6e6] px-4 outline-none focus:ring-2 focus:ring-brand">
+    <button class="mt-16 h-14 w-full  border border-brand bg-[#0466c8] text-white text-lg font-bold tracking-wide transition hover:bg-brand hover:text-white">LOGIN</button>
   </form>
   <p class="mt-24 text-center text-sm"><%= s.footer_copyright %></p>
 </div></body></html>
